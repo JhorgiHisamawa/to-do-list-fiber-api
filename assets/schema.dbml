@@ -1,0 +1,19 @@
+Enum Category {
+  "TASK"
+  "EVENT"
+}
+
+Enum Status {
+  "NEW"
+  "ON PROGRESS"
+  "EXPIRED"
+}
+
+Table activities {
+  id serial [pk]
+  title varchar(250)
+  category Category
+  description text
+  activity_date datetime
+  status Status
+}
