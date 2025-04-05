@@ -28,8 +28,8 @@ type Activity struct {
 1. **Clone repo**
 
    ```bash
-   git clone https://github.com/username/activity-api.git
-   cd activity-api
+   git clone git@github.com:JhorgiHisamawa/to-do-list-fiber-api.git
+   cd to-do-list-fiber-api
    ```
 
 2. **Install dependencies**
@@ -62,13 +62,24 @@ type Activity struct {
    );
    ```
 
-5. **Jalankan aplikasi**
+5. **Jalankan aplikasi (opsi A: manual)**
 
    ```bash
    go run main.go
    ```
 
    Server akan berjalan di: `http://localhost:3000`
+
+6. **Jalankan aplikasi (opsi B: dengan Docker)**
+
+   Jika tersedia file `Dockerfile`, kamu bisa langsung build dan jalankan container:
+
+   ```bash
+   docker build -t to-do-list-fiber-api .
+   docker run -p 3000:3000 to-do-list-fiber-api
+   ```
+
+   Pastikan database PostgreSQL juga berjalan dan dapat diakses dari container.
 
 ## 📬 API Endpoints
 
