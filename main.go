@@ -11,6 +11,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// Activity model
 type Activity struct {
 	ID           uuid.UUID `json:"id"`
 	Title        string    `json:"title" validate:"required"`
@@ -49,6 +50,11 @@ func main() {
 	app := fiber.New()
 	validate := validator.New()
 
+	/*
+		Define routes and logic handlers
+	*/
+
+	// Get all activities
 	app.Get("/activities", func(c *fiber.Ctx) error {
 		rows, err := db.Query("SELECT * FROM activities")
 		if err != nil {
@@ -68,6 +74,7 @@ func main() {
 		return c.Status(fiber.StatusOK).JSON(activities)
 	})
 
+	// Create a new activity
 	app.Post("/activities", func(c *fiber.Ctx) error {
 		var activity Activity
 		if err := c.BodyParser(&activity); err != nil {
@@ -87,6 +94,7 @@ func main() {
 		return c.Status(fiber.StatusCreated).JSON(fiber.Map{"message": "Success", "id": activity.ID})
 	})
 
+	// Update an existing activity
 	app.Put("/activities/:id", func(c *fiber.Ctx) error {
 		id := c.Params("id")
 		var activity Activity
@@ -107,6 +115,7 @@ func main() {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Success"})
 	})
 
+	// Delete an activity
 	app.Delete("/activities/:id", func(c *fiber.Ctx) error {
 		id := c.Params("id")
 		sql := "DELETE FROM activities WHERE id = $1"
@@ -117,5 +126,6 @@ func main() {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Success"})
 	})
 
+	// Start the server
 	app.Listen(":3000")
 }
